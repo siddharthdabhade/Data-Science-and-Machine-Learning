@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Machine Learning Experiments - Dashboard</title>
+  <style>
+    :root{--accent:#0b7285;--muted:#6c757d;--bg:#f8f9fa}
+    body{font-family:Inter,Segoe UI,Arial;background:var(--bg);margin:0;color:#212529}
+    header{background:white;padding:18px 24px;border-bottom:1px solid #e6e9ee;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:12px;align-items:center}
+    .brand h1{font-size:18px;margin:0}
+    .container{display:grid;grid-template-columns:280px 1fr;gap:20px;padding:20px}
+    nav{background:white;border-radius:12px;padding:14px;height:calc(100vh - 120px);overflow:auto;box-shadow:0 4px 18px rgba(11,114,133,0.06)}
+    nav a{display:block;padding:10px 12px;border-radius:8px;color:#0b7285;text-decoration:none;margin-bottom:6px}
+    nav a.active, nav a:hover{background:rgba(11,114,133,0.06)}
+    main{padding:18px;background:transparent}
+    .card{background:white;border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 6px 20px rgba(16,24,40,0.04)}
+    h2{margin-top:0}
+    pre{background:#0f1724;color:#e6eef8;padding:12px;border-radius:8px;overflow:auto}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+    footer{padding:12px;text-align:center;color:var(--muted);font-size:13px}
+    .btn{display:inline-block;padding:8px 12px;border-radius:8px;background:var(--accent);color:white;text-decoration:none}
+    .small{font-size:13px;color:var(--muted)}
+    .flow{font-family:monospace;background:#fffbe6;padding:8px;border-radius:8px}
+    .code-block{font-size:13px}
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36'><rect rx='8' width='36' height='36' fill='%230b7285'/><text x='50%' y='55%' font-size='16' text-anchor='middle' fill='white' font-family='Arial'>ML</text></svg>" alt="logo"/>
+    <div>
+      <h1>Machine Learning Experiments — HTML Dashboard</h1>
+      <div class="small">Ready-to-use experiment templates for teaching & labs</div>
+    </div>
+  </div>
+  <div>
+    <a class="btn" href="#download-all">Download All (zipped)</a>
+  </div>
+</header>
+<div class="container">
+  <nav id="toc">
+    <!-- Navigation links -->
+    <a href="#exp1" class="active">1. Evaluate Structured & Semi-Structured Dataset</a>
+    <a href="#exp2">2. Working with Various File Formats</a>
+    <a href="#exp3">3. Linear Regression (Single)</a>
+    <a href="#exp4">4. Evaluate Linear Regression</a>
+    <a href="#exp5">5. Multiple Linear Regression</a>
+    <a href="#exp6">6. Polynomial Regression</a>
+    <a href="#exp7">7. Ridge Regression</a>
+    <a href="#exp8">8. Logistic Regression (Classification)</a>
+    <a href="#exp9">9. Naive Bayes Classifier</a>
+    <a href="#exp10">10. K-Nearest Neighbour (KNN)</a>
+    <a href="#exp11">11. Support Vector Machine (SVM)</a>
+    <a href="#exp12">12. Distance-based Clustering (K-Means)</a>
+    <a href="#exp13">13. Hierarchical Clustering</a>
+    <a href="#exp14">14. Density-based Clustering (DBSCAN)</a>
+    <a href="#exp15">15. Apriori (Association Rules)</a>
+    <hr/>
+    <div class="small">Use the left menu to jump to any experiment. Each experiment contains: Title, Objective, Theory, Tools, Dataset, Procedure, Code, Output, Results, Viva Questions.</div>
+  </nav>
+
+  <main>
+    <!-- Experiment 1 -->
+    <section id="exp1" class="card">
+      <h2>1. Evaluate Structured & Semi-Structured Dataset</h2>
+      <p class="small">Aim: Load, inspect and compare CSV (structured) vs JSON (semi-structured) data.</p>
+      <div class="grid">
+        <div>
+          <h3>Objective / Aim</h3>
+          <ul>
+            <li>Differentiate between structured and semi-structured data.</li>
+            <li>Load CSV & JSON and normalize JSON to tabular format.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Theory / Concept</h3>
+          <p>Structured data follows a fixed schema (tables). JSON and XML are semi-structured — nested fields that must be flattened for most ML algorithms.</p>
+        </div>
+      </div>
+      <div class="grid">
+        <div>
+          <h3>Tools / Software</h3>
+          <p>Python 3.11, Jupyter, pandas, numpy, json</p>
+        </div>
+        <div>
+          <h3>Dataset</h3>
+          <p><strong>sample_sales.csv</strong> (500 rows) & <strong>data.json</strong> (transaction logs)</p>
+        </div>
+      </div>
+
+      <h3>Procedure / Steps</h3>
+      <ol>
+        <li>Import libraries: pandas, json.</li>
+        <li>Load CSV: <code>pd.read_csv()</code> and inspect <code>head()</code>, <code>info()</code>.</li>
+        <li>Load JSON: <code>json.load()</code>, then <code>pd.json_normalize()</code>.</li>
+        <li>Compare schema, completeness, and nesting levels.</li>
+      </ol>
+
+      <div class="flow">
+        Start → Import libraries → Load CSV → Load JSON → Normalize JSON → Compare → Result
+      </div>
+
+      <h3>Code / Implementation (snippet)</h3>
+      <pre class="code-block">import pandas as pd
+import json
+
+# Structured
+df_csv = pd.read_csv('sample_sales.csv')
+print(df_csv.head())
+
+# Semi-structured
+with open('data.json') as f:
+    data = json.load(f)
+
+# normalize nested transactions
+from pandas import json_normalize
+df_json = json_normalize(data, record_path=['transactions'], meta=['customer_id'])
+print(df_json.head())</pre>
+
+      <h3>Output / Observations</h3>
+      <p>CSV: tabular, ready for analysis.<br/>JSON: nested; after normalization, becomes tabular with repeated customer_id per transaction.</p>
+
+      <h3>Result / Inference</h3>
+      <p>Structured data is straightforward for ML pipelines; semi-structured data provides richer hierarchies but requires preprocessing.</p>
+
+      <h3>Viva / Review Questions</h3>
+      <ol>
+        <li>Define structured and semi-structured data.</li>
+        <li>Why use <code>pd.json_normalize()</code>?</li>
+        <li>Give two examples of semi-structured data sources.</li>
+      </ol>
+    </section>
+
+    <!-- Experiment 2 -->
+    <section id="exp2" class="card">
+      <h2>2. Working with Various File Formats</h2>
+      <p class="small">Aim: Learn to load and preprocess CSV, Excel, JSON, XML and SQL table data for ML.</p>
+
+      <h3>Objective / Aim</h3>
+      <ul>
+        <li>Understand common file formats and how to read them in Python.</li>
+        <li>Perform basic cleaning: missing values, encoding, and type conversions.</li>
+        </ul>
+... (content truncated in file for brevity)
